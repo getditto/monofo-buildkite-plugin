@@ -8,7 +8,9 @@ echo "_lib_script_dir: $_lib_script_dir"
 pushd "$_lib_script_dir/../.."
 pwd
 
-eval "$(monofo "--version")"
+MONOFO_VERSION=$(monofo "--version")
+echo "MONOFO_VERSION: $MONOFO_VERSION"
+eval "$MONOFO_VERSION"
 MONOFO=$(monofo "pipeline")
 
 # Usage: create a pipeline that looks like this:
