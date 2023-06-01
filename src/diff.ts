@@ -144,7 +144,7 @@ async function getBaseBuildForIntegrationBranch(
  */
 async function getBaseBuildForFeatureBranch(info: BuildkiteEnvironment): Promise<BuildkiteBuild> {
   log(`Getting base build for feature branch`);
-  return mergeBase(`origin/${info.defaultBranch}`, info.commit, info.defaultBranch).then((commit) => {
+  return mergeBase(`origin/${info.defaultBranch}`, info.commit).then((commit) => {
     log(`Found merge base of ${commit} for current feature branch`);
     return getSuitableBranchBuildAtOrBeforeCommit(info, commit, info.defaultBranch).catch((e) => {
       log(
