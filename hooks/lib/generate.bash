@@ -4,6 +4,7 @@ set -euo pipefail
 
 # shellcheck source=./run.bash
 source "$_lib_script_dir/run.bash"
+eval "$(monofo "--version")"
 MONOFO=$(monofo "pipeline")
 
 # Usage: create a pipeline that looks like this:
