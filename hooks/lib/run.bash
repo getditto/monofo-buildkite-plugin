@@ -8,5 +8,5 @@ export MONOFO_VERSION=${MONOFO_VERSION:-5.0.12}
 export DEBUG="monofo:*"
 
 function monofo() {
-    echo "npx --quiet --shell sh monofo ${*}"
+    echo "npm exec -- monofo ${*}"
 }
