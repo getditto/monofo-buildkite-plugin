@@ -4,6 +4,10 @@ set -euo pipefail
 
 # shellcheck source=./run.bash
 source "$_lib_script_dir/run.bash"
+echo "_lib_script_dir: $_lib_script_dir"
+pushd "$_lib_script_dir/../.."
+pwd
+
 eval "$(monofo "--version")"
 MONOFO=$(monofo "pipeline")
 

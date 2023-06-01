@@ -8,5 +8,5 @@ export MONOFO_VERSION=${MONOFO_VERSION:-5.0.12}
 export DEBUG="monofo:*"
 
 function monofo() {
-    echo "npm exec -- monofo ${*}"
+    echo "npm --prefix ${BUILDKITE_BUILD_CHECKOUT_PATH} exec -- monofo ${*}"
 }
