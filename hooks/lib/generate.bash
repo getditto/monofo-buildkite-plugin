@@ -4,9 +4,6 @@ set -euo pipefail
 
 # shellcheck source=./run.bash
 source "$_lib_script_dir/run.bash"
-echo "_lib_script_dir: $_lib_script_dir"
-pushd "$_lib_script_dir/../.."
-pwd
 
 MONOFO_VERSION=$(monofo "--version")
 echo "MONOFO_VERSION: $MONOFO_VERSION"
