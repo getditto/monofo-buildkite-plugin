@@ -1,12 +1,12 @@
 [[ "${BASH_SOURCE[0]}" == "${0}" ]] && echo "Not for direct execution" && exit 2 || true
 set -euo pipefail
 
-# This version marker is automatically updated to match the published release
-export MONOFO_VERSION=${MONOFO_VERSION:-5.0.12}
+script_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+cmd_path="${script_dir}/../../bin/run"
 
 # This turns on debugging for monofo, which is important to see what's going on
 export DEBUG="monofo:*"
 
 function monofo() {
-    echo "npm --prefix ${BUILDKITE_BUILD_CHECKOUT_PATH} exec -- monofo ${*}"
+    echo "$cmd_path ${*}"
 }
