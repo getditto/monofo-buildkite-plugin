@@ -159,6 +159,20 @@ async function getBaseBuildForFeatureBranch(info: BuildkiteEnvironment): Promise
 /**
  * The base commit is the commit used to compare a build with
  *
+ * This is a simpler version of getBaseBuild, which return only the commit hash
+ * of the base (or target) commit.
+ */
+export async function getBaseCommit(info: BuildkiteEnvironment): Promise<string> {
+  log(`Getting base build for feature branch`);
+  return mergeBase(`origin/${info.defaultBranch}`, info.commit).then((commit) => {
+    log(`Found merge base of ${commit} for current feature branch`);
+    return commit;
+  });
+}
+
+/**
+ * The base commit is the commit used to compare a build with
+ *
  * When resolved, will always be a commit on the main branch. It will also be a commit with a successful build (so we
  * can snarf artifacts)
  */
@@ -180,11 +194,30 @@ export async function getBaseBuild(info: BuildkiteEnvironment): Promise<Buildkit
   return build;
 }
 
-export function matchConfigs(build: BuildkiteBuild, configs: Config[], changedFiles: string[]): void {
+// Old matchConfigs
+// export function matchConfigs(build: BuildkiteBuild, configs: Config[], changedFiles: string[]): void {
+//   log(`Found ${count(changedFiles, 'changed file')}: ${changedFiles.join(', ')}`);
+
+//   configs.forEach((config) => {
+//     config.setBaseBuild(build);
+//     config.updateMatchingChanges(changedFiles);
+
+//     if (config.changes.length > 1) {
+//       log(`Found ${count(config.changes, 'matching change')} for ${config.monorepo.name}`);
+//     }
+//   });
+// }
+
+/**
+ * Variant of matchConfigs that doesn't require a buildkite build
+ *
+ * @param configs Config
+ * @param changedFiles string[] of paths to files that have changed
+ */
+export function matchConfigs(configs: Config[], changedFiles: string[]): void {
   log(`Found ${count(changedFiles, 'changed file')}: ${changedFiles.join(', ')}`);
 
   configs.forEach((config) => {
-    config.setBaseBuild(build);
     config.updateMatchingChanges(changedFiles);
 
     if (config.changes.length > 1) {

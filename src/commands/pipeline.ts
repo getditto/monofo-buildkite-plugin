@@ -2,7 +2,7 @@ import debug from 'debug';
 import { dump as dumpYaml } from 'js-yaml';
 import { getBuildkiteInfo } from '../buildkite/config';
 import { BaseCommand } from '../command';
-import { getBaseBuild, matchConfigs } from '../diff';
+import { getBaseCommit, matchConfigs } from '../diff';
 import { diff } from '../git';
 import mergePipelines from '../merge';
 import Config from '../models/config';
@@ -22,10 +22,10 @@ export default class Pipeline extends BaseCommand {
     }
 
     try {
-      const baseBuild = await getBaseBuild(getBuildkiteInfo(process.env));
-      const changedFiles = await diff(baseBuild.commit);
+      const baseCommit = await getBaseCommit(getBuildkiteInfo(process.env));
+      const changedFiles = await diff(baseCommit);
 
-      matchConfigs(baseBuild, configs, changedFiles);
+      matchConfigs(configs, changedFiles);
     } catch (err: unknown) {
       log('Failed to find base commit or diff changes, falling back to do a full build', err);
       Config.configureFallback(configs);

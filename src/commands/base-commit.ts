@@ -1,6 +1,6 @@
 import { getBuildkiteInfo } from '../buildkite/config';
 import { BaseCommand } from '../command';
-import { getBaseBuild } from '../diff';
+import { getBaseCommit } from '../diff';
 
 export default class BaseCommit extends BaseCommand {
   static override description = 'output a base commit hash, against which the current build would be compared';
@@ -14,7 +14,7 @@ export default class BaseCommit extends BaseCommand {
   static override flags = { ...BaseCommand.flags };
 
   async run() {
-    const base = await getBaseBuild(getBuildkiteInfo(process.env));
-    process.stdout.write(`${base.commit}\n`);
+    const base = await getBaseCommit(getBuildkiteInfo(process.env));
+    process.stdout.write(`${base}\n`);
   }
 }
