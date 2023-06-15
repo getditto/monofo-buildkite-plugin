@@ -152,7 +152,7 @@ async function updateDecisionsForPureCache(configs: Config[]): Promise<void> {
     )
   );
 
-  const foundMetdataByComponent = Object.fromEntries(
+  const foundMetadataByComponent = Object.fromEntries(
     (await repository.getAll(keys)).map((metadata) => [
       metadata.component,
       { buildId: metadata.buildId, commit: metadata.commit },
@@ -160,7 +160,7 @@ async function updateDecisionsForPureCache(configs: Config[]): Promise<void> {
   );
 
   cacheConfigs.forEach((config) => {
-    const metadata = foundMetdataByComponent[config.getComponent()];
+    const metadata = foundMetadataByComponent[config.getComponent()];
 
     if (!metadata?.buildId) {
       config.reason.pureCacheHit = false;
