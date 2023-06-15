@@ -76,7 +76,7 @@ describe('matchConfigs', () => {
     it('matches changed files against configs', async () => {
       selectScenario('kitchen-sink');
       const configs = await Config.getAll(process.cwd());
-      matchConfigs(BASE_BUILD, configs, changedFiles);
+      matchConfigs(configs, changedFiles);
       const changes = configs.map((r) => r.changes);
 
       expect(changes).toHaveLength(16);
@@ -107,7 +107,7 @@ describe('matchConfigs', () => {
     it('still matches configs that have matches hard-coded to true', async () => {
       selectScenario('kitchen-sink');
       const configs = await Config.getAll(process.cwd());
-      matchConfigs(BASE_BUILD, configs, changedFiles);
+      matchConfigs(configs, changedFiles);
       const changes = configs.map((r) => r.changes);
 
       expect(changes).toHaveLength(16);
