@@ -122,12 +122,15 @@ async function getBaseBuildForDefaultBranch(info: BuildkiteEnvironment): Promise
  *
  * So, we look for the most recent successful build of the integration branch, grab its commit, and validate it still
  * exists on the remote. If this process fails, we fall back to getBaseBuildForDefaultBranch
+ *
+ * Note: Makes HTTP API call to Buildkite
  */
 async function getBaseBuildForIntegrationBranch(
   info: BuildkiteEnvironment,
   integrationBranch: string
 ): Promise<BuildkiteBuild> {
   log(`Getting base build for integration branch`);
+  // HTTP via BuildkiteClient
   return getMostRecentBranchBuild(info, integrationBranch)
     .then((result) => result || getBaseBuildForDefaultBranch(info))
     .catch((e) => {
@@ -159,7 +162,7 @@ async function getBaseBuildForFeatureBranch(info: BuildkiteEnvironment): Promise
 /**
  * The base commit is the commit used to compare a build with
  *
- * This is a simpler version of getBaseBuild, which return only the commit hash
+ * This is a simpler version of `getBaseBuild`, which return only the commit hash
  * of the base (or target) commit.
  */
 export async function getBaseCommit(info: BuildkiteEnvironment): Promise<string> {
