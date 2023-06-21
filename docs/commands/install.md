@@ -23,4 +23,4 @@ DESCRIPTION
   install a DynamoDB table to store cache pointers for pure builds
 ```
 
-_See code: [dist/src/commands/install.ts](https://github.com/vital-software/monofo/blob/v5.0.1/dist/src/commands/install.ts)_
+_See code: [dist/src/commands/install.ts](https://github.com/vital-software/monofo-buildkite-plugin/blob/v5.0.13/dist/src/commands/install.ts)_

@@ -23,4 +23,4 @@ DESCRIPTION
   generate a dynamic pipeline.yml and output it
 ```
 
-_See code: [dist/src/commands/pipeline.ts](https://github.com/vital-software/monofo/blob/v5.0.1/dist/src/commands/pipeline.ts)_
+_See code: [dist/src/commands/pipeline.ts](https://github.com/vital-software/monofo-buildkite-plugin/blob/v5.0.13/dist/src/commands/pipeline.ts)_

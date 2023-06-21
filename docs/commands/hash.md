@@ -26,4 +26,4 @@ DESCRIPTION
   hash the specified component and output the value
 ```
 
-_See code: [dist/src/commands/hash.ts](https://github.com/vital-software/monofo/blob/v5.0.1/dist/src/commands/hash.ts)_
+_See code: [dist/src/commands/hash.ts](https://github.com/vital-software/monofo-buildkite-plugin/blob/v5.0.13/dist/src/commands/hash.ts)_

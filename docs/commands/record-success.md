@@ -27,4 +27,4 @@ DESCRIPTION
   Record success of a component of the build, so that we can skip it next time if possible
 ```
 
-_See code: [dist/src/commands/record-success.ts](https://github.com/vital-software/monofo/blob/v5.0.1/dist/src/commands/record-success.ts)_
+_See code: [dist/src/commands/record-success.ts](https://github.com/vital-software/monofo-buildkite-plugin/blob/v5.0.13/dist/src/commands/record-success.ts)_

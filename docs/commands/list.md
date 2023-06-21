@@ -26,4 +26,4 @@ DESCRIPTION
   list matching files for different parts of the pipeline
 ```
 
-_See code: [dist/src/commands/list.ts](https://github.com/vital-software/monofo/blob/v5.0.1/dist/src/commands/list.ts)_
+_See code: [dist/src/commands/list.ts](https://github.com/vital-software/monofo-buildkite-plugin/blob/v5.0.13/dist/src/commands/list.ts)_
