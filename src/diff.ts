@@ -166,7 +166,7 @@ async function getBaseBuildForFeatureBranch(info: BuildkiteEnvironment): Promise
  * of the base (or target) commit.
  */
 export async function getBaseCommit(info: BuildkiteEnvironment): Promise<string> {
-  log(`Getting base build for feature branch`);
+  log(`Getting base commit for branch ${info.branch}`);
   return mergeBase(`origin/${info.defaultBranch}`, info.commit).then((commit) => {
     log(`Found merge base of ${commit} for current feature branch`);
     return commit;
