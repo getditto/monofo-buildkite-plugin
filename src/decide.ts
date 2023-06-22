@@ -95,7 +95,7 @@ function updateDecisionsForEnvVars(configs: Config[]): void {
 /**
  * If there is no previous build, we always include the step
  */
-function updateDecisionsFoFallback(configs: Config[]): void {
+function updateDecisionsForFallback(configs: Config[]): void {
   configs.forEach((config) => {
     if (!config.baseBuild) {
       if (config.monorepo.matches === false) {
@@ -181,6 +181,6 @@ export async function updateDecisions(configs: Config[]): Promise<void> {
   updateDecisionsForDependsOn(configs);
   await updateDecisionsForPureCache(configs);
   updateDecisionsForEnvVars(configs);
-  updateDecisionsFoFallback(configs);
+  updateDecisionsForFallback(configs);
   updateDecisionsForBranchList(configs);
 }
