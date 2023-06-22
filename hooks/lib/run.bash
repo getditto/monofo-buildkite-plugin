@@ -10,6 +10,7 @@ export DEBUG="monofo:*"
 (
     # Ensure typescript has been built
     cd "${script_dir}/../.."
+    yarn install
     yarn build
 )
 
