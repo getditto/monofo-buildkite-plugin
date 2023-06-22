@@ -1,5 +1,5 @@
 [[ "${BASH_SOURCE[0]}" == "${0}" ]] && echo "Not for direct execution" && exit 2 || true
-set -euo pipefail
+set -euox pipefail
 
 script_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 cmd_path="${script_dir}/../../bin/run"
