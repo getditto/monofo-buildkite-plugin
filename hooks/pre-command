@@ -3,6 +3,9 @@
 #
 # This script just interprets a couple of key settings, and then calls into the
 # relevant sub-script in lib/
+#
+# Required tools:
+# - jq
 
 set -euo pipefail
 

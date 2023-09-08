@@ -1,3 +1,10 @@
+#!/usr/bin/env bash
+# Declares a shell function `monofo` that can be used to invoke monofo via `cmd_path`.
+#
+# Required tools:
+# - tsc (invoked by `yarn build`)
+# - yarn
+
 [[ "${BASH_SOURCE[0]}" == "${0}" ]] && echo "Not for direct execution" && exit 2 || true
 set -euo pipefail
 

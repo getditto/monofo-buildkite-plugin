@@ -1,3 +1,10 @@
+#!/usr/bin/env bash
+# Invokes `monofo upload` with a list of files.
+#
+# Required tools:
+# - buildkite-agent
+# - jq
+
 [[ "${BASH_SOURCE[0]}" == "${0}" ]] && echo "Not for direct execution" && exit 2 || true
 _lib_script_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 set -euo pipefail
