@@ -27,4 +27,4 @@ DESCRIPTION
   deflate a tar resource into a given artifact name
 ```
 
-_See code: [dist/src/commands/deflate.ts](https://github.com/vital-software/monofo-buildkite-plugin/blob/v5.0.13/dist/src/commands/deflate.ts)_
+_See code: [dist/src/commands/deflate.ts](https://github.com/vital-software/monofo-buildkite-plugin/blob/v6.0.0/dist/src/commands/deflate.ts)_
