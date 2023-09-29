@@ -123,9 +123,10 @@ function updateDecisionsForDependsOn(configs: Config[]): void {
       const dependent = byName[from];
       const dependency = byName[to];
 
-      if (dependent.included && !dependency.included) {
-        dependency.included = true;
-        dependency.reason = new Reason(IncludeReasonType.DEPENDS_ON, [from]);
+      // Include downstream dependents
+      if (dependency.included && !dependent.included) {
+        dependent.included = true;
+        dependent.reason = new Reason(IncludeReasonType.DEPENDS_ON, [from]);
       }
     });
 }
