@@ -126,7 +126,7 @@ function updateDecisionsForDependsOn(configs: Config[]): void {
       // Include downstream dependents
       if (dependency.included && !dependent.included) {
         dependent.included = true;
-        dependent.reason = new Reason(IncludeReasonType.DEPENDS_ON, [from]);
+        dependent.reason = new Reason(IncludeReasonType.DEPENDS_ON, [to]);
       }
     });
 }
