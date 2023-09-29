@@ -95,7 +95,7 @@ function updateDecisionsForEnvVars(configs: Config[]): void {
 /**
  * If there is no previous build, we always include the step
  */
-function updateDecisionsFoFallback(configs: Config[]): void {
+function updateDecisionsForFallback(configs: Config[]): void {
   configs.forEach((config) => {
     if (!config.baseBuild) {
       if (config.monorepo.matches === false) {
@@ -152,7 +152,7 @@ async function updateDecisionsForPureCache(configs: Config[]): Promise<void> {
     )
   );
 
-  const foundMetdataByComponent = Object.fromEntries(
+  const foundMetadataByComponent = Object.fromEntries(
     (await repository.getAll(keys)).map((metadata) => [
       metadata.component,
       { buildId: metadata.buildId, commit: metadata.commit },
@@ -160,7 +160,7 @@ async function updateDecisionsForPureCache(configs: Config[]): Promise<void> {
   );
 
   cacheConfigs.forEach((config) => {
-    const metadata = foundMetdataByComponent[config.getComponent()];
+    const metadata = foundMetadataByComponent[config.getComponent()];
 
     if (!metadata?.buildId) {
       config.reason.pureCacheHit = false;
@@ -181,6 +181,6 @@ export async function updateDecisions(configs: Config[]): Promise<void> {
   updateDecisionsForDependsOn(configs);
   await updateDecisionsForPureCache(configs);
   updateDecisionsForEnvVars(configs);
-  updateDecisionsFoFallback(configs);
+  // updateDecisionsForFallback(configs);
   updateDecisionsForBranchList(configs);
 }

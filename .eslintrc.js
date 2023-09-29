@@ -1,9 +1,9 @@
 module.exports = {
-  root: true,
   globals: {
     __dirname: true,
     process: true
   },
+  root: true,
   env: {
     commonjs: true,
     es6: true,

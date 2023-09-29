@@ -3,8 +3,15 @@
 #
 # This script just interprets a couple of key settings, and then calls into the
 # relevant sub-script in lib/
+#
+# Required tools:
+# - jq
 
 set -euo pipefail
+
+# Debugging
+echo "pre-command"
+echo "PATH: $PATH"
 
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 

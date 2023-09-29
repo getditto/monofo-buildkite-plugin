@@ -122,12 +122,15 @@ async function getBaseBuildForDefaultBranch(info: BuildkiteEnvironment): Promise
  *
  * So, we look for the most recent successful build of the integration branch, grab its commit, and validate it still
  * exists on the remote. If this process fails, we fall back to getBaseBuildForDefaultBranch
+ *
+ * Note: Makes HTTP API call to Buildkite
  */
 async function getBaseBuildForIntegrationBranch(
   info: BuildkiteEnvironment,
   integrationBranch: string
 ): Promise<BuildkiteBuild> {
   log(`Getting base build for integration branch`);
+  // HTTP via BuildkiteClient
   return getMostRecentBranchBuild(info, integrationBranch)
     .then((result) => result || getBaseBuildForDefaultBranch(info))
     .catch((e) => {
@@ -144,7 +147,7 @@ async function getBaseBuildForIntegrationBranch(
  */
 async function getBaseBuildForFeatureBranch(info: BuildkiteEnvironment): Promise<BuildkiteBuild> {
   log(`Getting base build for feature branch`);
-  return mergeBase(`origin/${info.defaultBranch}`, info.commit, info.defaultBranch).then((commit) => {
+  return mergeBase(`origin/${info.defaultBranch}`, info.commit).then((commit) => {
     log(`Found merge base of ${commit} for current feature branch`);
     return getSuitableBranchBuildAtOrBeforeCommit(info, commit, info.defaultBranch).catch((e) => {
       log(
@@ -153,6 +156,20 @@ async function getBaseBuildForFeatureBranch(info: BuildkiteEnvironment): Promise
       );
       throw e;
     });
+  });
+}
+
+/**
+ * The base commit is the commit used to compare a build with
+ *
+ * This is a simpler version of `getBaseBuild`, which return only the commit hash
+ * of the base (or target) commit.
+ */
+export async function getBaseCommit(info: BuildkiteEnvironment): Promise<string> {
+  log(`Getting base commit for branch ${info.branch}`);
+  return mergeBase(`origin/${info.defaultBranch}`, info.commit).then((commit) => {
+    log(`Found merge base of ${commit} for current feature branch`);
+    return commit;
   });
 }
 
@@ -180,11 +197,30 @@ export async function getBaseBuild(info: BuildkiteEnvironment): Promise<Buildkit
   return build;
 }
 
-export function matchConfigs(build: BuildkiteBuild, configs: Config[], changedFiles: string[]): void {
+// Old matchConfigs
+// export function matchConfigs(build: BuildkiteBuild, configs: Config[], changedFiles: string[]): void {
+//   log(`Found ${count(changedFiles, 'changed file')}: ${changedFiles.join(', ')}`);
+
+//   configs.forEach((config) => {
+//     config.setBaseBuild(build);
+//     config.updateMatchingChanges(changedFiles);
+
+//     if (config.changes.length > 1) {
+//       log(`Found ${count(config.changes, 'matching change')} for ${config.monorepo.name}`);
+//     }
+//   });
+// }
+
+/**
+ * Variant of matchConfigs that doesn't require a buildkite build
+ *
+ * @param configs Config
+ * @param changedFiles string[] of paths to files that have changed
+ */
+export function matchConfigs(configs: Config[], changedFiles: string[]): void {
   log(`Found ${count(changedFiles, 'changed file')}: ${changedFiles.join(', ')}`);
 
   configs.forEach((config) => {
-    config.setBaseBuild(build);
     config.updateMatchingChanges(changedFiles);
 
     if (config.changes.length > 1) {

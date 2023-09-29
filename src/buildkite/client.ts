@@ -29,7 +29,7 @@ export interface BuildkiteBuild {
 export default class BuildkiteClient {
   constructor(
     private readonly info: BuildkiteEnvironment,
-    private readonly accessToken: string = process.env.BUILDKITE_API_ACCESS_TOKEN
+    private readonly accessToken: string = '' // process.env.BUILDKITE_API_ACCESS_TOKEN
   ) {}
 
   private baseUrl = new URL(

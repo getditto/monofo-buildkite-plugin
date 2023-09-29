@@ -23,4 +23,4 @@ DESCRIPTION
   Uninstalls the Monofo DynamoDB tables
 ```
 
-_See code: [dist/src/commands/uninstall.ts](https://github.com/vital-software/monofo/blob/v5.0.1/dist/src/commands/uninstall.ts)_
+_See code: [dist/src/commands/uninstall.ts](https://github.com/vital-software/monofo-buildkite-plugin/blob/v6.0.0/dist/src/commands/uninstall.ts)_

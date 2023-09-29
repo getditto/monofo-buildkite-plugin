@@ -1,10 +1,23 @@
+#!/usr/bin/env bash
+# Invokes `monofo pipeline` and `buildkite-agent pipeline upload`
+#
+# Required tools:
+# - buildkite-agent
+
 [[ "${BASH_SOURCE[0]}" == "${0}" ]] && echo "Not for direct execution" && exit 2 || true
 _lib_script_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 set -euo pipefail
 
+# Debugging
+echo "generate.bash"
+
 # shellcheck source=./run.bash
 source "$_lib_script_dir/run.bash"
-MONOFO=$(monofo "pipeline")
+
+MONOFO_CMD=$(monofo "--version")
+echo "MONOFO_CMD: $MONOFO_CMD"
+eval "$MONOFO_CMD"
+MONOFO_CMD=$(monofo "pipeline")
 
 # Usage: create a pipeline that looks like this:
 #
@@ -31,8 +44,8 @@ BUILDKITE_AGENT_ACCESS_TOKEN=${BUILDKITE_AGENT_ACCESS_TOKEN:-}
 echo "--- Fetching other branches" >&2
 git fetch -v origin +refs/heads/*:refs/remotes/origin/*
 
-echo "+++ :pipeline: Generating... going to run ${MONOFO}" >&2
-$MONOFO > "$PIPELINE_FILE"
+echo "+++ :pipeline: Generating... going to run ${MONOFO_CMD}" >&2
+$MONOFO_CMD > "$PIPELINE_FILE"
 
 echo "--- :pipeline: Result" >&2
 cat "$PIPELINE_FILE"

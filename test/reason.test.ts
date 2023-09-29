@@ -13,7 +13,7 @@ async function getInclusionReasons(
   process.env = fakeProcess(env);
   selectScenario('kitchen-sink');
   const configs = await Config.getAll(process.cwd());
-  matchConfigs(BASE_BUILD, configs, changedFiles);
+  matchConfigs(configs, changedFiles);
   await updateDecisions(configs);
 
   return configs.map((c) => ({
@@ -223,7 +223,7 @@ describe('config.reason', () => {
     ]);
 
     const configs = await Config.getAll(process.cwd());
-    matchConfigs(BASE_BUILD, configs, changedFiles);
+    matchConfigs(configs, changedFiles);
     await updateDecisions(configs);
 
     const reasons = configs.map((c) => ({
