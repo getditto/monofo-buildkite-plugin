@@ -40,7 +40,7 @@ describe('config.reason', () => {
         reason: 'a branches configuration which excludes the current branch',
       },
       { name: 'changed', included: false, reason: 'no matching changes' },
-      { name: 'dependedon', included: true, reason: 'been pulled in by a depends_on from foo' },
+      { name: 'dependedon', included: false, reason: 'no matching changes' },
       { name: 'excluded', included: false, reason: 'been forced NOT to by PIPELINE_NO_RUN_EXCLUDED' },
       { name: 'foo', included: true, reason: '1 matching change: foo/README.md' },
       { name: 'bar', included: false, reason: 'no matching changes' },
