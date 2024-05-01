@@ -22,7 +22,8 @@ export DEBUG="monofo:*"
 export MONOFO_DEFAULT_BRANCH=${BUILDKITE_PULL_REQUEST_BASE_BRANCH}
 export MONOFO_INTEGRATION_BRANCH=${BUILDKITE_PULL_REQUEST_BASE_BRANCH}
 
-cd "${plugin_root}"
+# Init NVM and build monofo plugin
+pushd "${plugin_root}"
 
 # Load NVM
 export NVM_DIR="$HOME/.nvm"
@@ -33,6 +34,9 @@ nvm install && nvm use
 # Ensure typescript has been built
 yarn install
 yarn build
+
+# Return to build workspace
+popd
 
 function monofo() {
     echo "$cmd_path ${*}"
