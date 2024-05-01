@@ -12,7 +12,8 @@ set -euo pipefail
 echo "run.bash"
 
 script_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
-cmd_path="${script_dir}/../../bin/run"
+plugin_root="${script_dir}/../.."
+cmd_path="${plugin_root}/bin/run"
 
 # This turns on debugging for monofo, which is important to see what's going on
 export DEBUG="monofo:*"
@@ -21,20 +22,17 @@ export DEBUG="monofo:*"
 export MONOFO_DEFAULT_BRANCH=${BUILDKITE_PULL_REQUEST_BASE_BRANCH}
 export MONOFO_INTEGRATION_BRANCH=${BUILDKITE_PULL_REQUEST_BASE_BRANCH}
 
-(
-    cd "${script_dir}"
+cd "${plugin_root}"
 
-    # Load NVM
-    export NVM_DIR="$HOME/.nvm"
-    # shellcheck disable=SC1091
-    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-    nvm install && nvm use
+# Load NVM
+export NVM_DIR="$HOME/.nvm"
+# shellcheck disable=SC1091
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+nvm install && nvm use
 
-    # Ensure typescript has been built
-    cd "${script_dir}/../.."
-    yarn install
-    yarn build
-)
+# Ensure typescript has been built
+yarn install
+yarn build
 
 function monofo() {
     echo "$cmd_path ${*}"
