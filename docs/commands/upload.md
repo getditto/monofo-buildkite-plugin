@@ -61,4 +61,4 @@ EXAMPLES
   $ find . -name node_modules -type d -prune -print0 | monofo upload --files-from - --null
 ```
 
-_See code: [dist/src/commands/upload.ts](https://github.com/vital-software/monofo-buildkite-plugin/blob/v6.0.0/dist/src/commands/upload.ts)_
+_See code: [dist/src/commands/upload.ts](https://github.com/vital-software/monofo-buildkite-plugin/blob/v6.0.2/dist/src/commands/upload.ts)_

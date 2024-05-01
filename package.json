@@ -1,6 +1,6 @@
 {
   "name": "monofo",
-  "version": "6.0.0",
+  "version": "6.0.2",
   "description": "Dynamic Buildkite pipeline generator for monorepos",
   "author": "Dominic Scheirlinck <dominic@vitaler.com>",
   "bin": {
@@ -34,7 +34,7 @@
     "prepack": "run-s build"
   },
   "engines": {
-    "node": ">=14.16"
+    "node": ">=20"
   },
   "oclif": {
     "commands": "./dist/src/commands",
