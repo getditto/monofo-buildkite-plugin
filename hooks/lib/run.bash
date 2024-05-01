@@ -22,6 +22,14 @@ export MONOFO_DEFAULT_BRANCH=${BUILDKITE_PULL_REQUEST_BASE_BRANCH}
 export MONOFO_INTEGRATION_BRANCH=${BUILDKITE_PULL_REQUEST_BASE_BRANCH}
 
 (
+    cd "${script_dir}"
+
+    # Load NVM
+    export NVM_DIR="$HOME/.nvm"
+    # shellcheck disable=SC1091
+    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+    nvm install && nvm use
+
     # Ensure typescript has been built
     cd "${script_dir}/../.."
     yarn install
