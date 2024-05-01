@@ -34,7 +34,7 @@
     "prepack": "run-s build"
   },
   "engines": {
-    "node": ">=14.16"
+    "node": ">=18.18"
   },
   "oclif": {
     "commands": "./dist/src/commands",
