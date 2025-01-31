@@ -31,6 +31,15 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 nvm install && nvm use
 
+# Install yarn
+if command -v yarn &> /dev/null
+then
+    echo -n "yarn "
+    yarn --version
+else
+    npm install --global yarn
+fi
+
 # Ensure typescript has been built
 yarn install
 yarn build
