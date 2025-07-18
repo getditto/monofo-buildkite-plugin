@@ -93,7 +93,7 @@ function updateDecisionsForEnvVars(configs: Config[]): void {
 }
 
 /**
- * If there is no previous build, we always include the step
+ * If there is no previous build, we always include the step (fallback when no other decision has been made)
  */
 function updateDecisionsForFallback(configs: Config[]): void {
   configs.forEach((config) => {
@@ -123,10 +123,10 @@ function updateDecisionsForDependsOn(configs: Config[]): void {
       const dependent = byName[from];
       const dependency = byName[to];
 
-      // Include downstream dependents
-      if (dependency.included && !dependent.included) {
-        dependent.included = true;
-        dependent.reason = new Reason(IncludeReasonType.DEPENDS_ON, [to]);
+      // Include upstream dependencies
+      if (dependent.included && !dependency.included) {
+        dependency.included = true;
+        dependency.reason = new Reason(IncludeReasonType.DEPENDS_ON, [from]);
       }
     });
 }
@@ -180,8 +180,8 @@ async function updateDecisionsForPureCache(configs: Config[]): Promise<void> {
 export async function updateDecisions(configs: Config[]): Promise<void> {
   updateDecisionsForChanges(configs);
   updateDecisionsForDependsOn(configs);
-  await updateDecisionsForPureCache(configs);
+  updateDecisionsForFallback(configs);
   updateDecisionsForEnvVars(configs);
-  // updateDecisionsForFallback(configs);
+  await updateDecisionsForPureCache(configs);
   updateDecisionsForBranchList(configs);
 }
