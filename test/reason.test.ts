@@ -13,6 +13,10 @@ async function getInclusionReasons(
   process.env = fakeProcess(env);
   selectScenario('kitchen-sink');
   const configs = await Config.getAll(process.cwd());
+
+  // Set a base build for normal tests (when we want to test file matching behavior)
+  configs.forEach(config => config.setBaseBuild(BASE_BUILD));
+
   matchConfigs(configs, changedFiles);
   await updateDecisions(configs);
 
@@ -151,6 +155,10 @@ describe('config.reason', () => {
   });
 
   it("matches expected reasons when there isn't a previous build", async () => {
+    process.env = fakeProcess({
+      PIPELINE_RUN_INCLUDED: undefined,
+      PIPELINE_NO_RUN_EXCLUDED: undefined,
+    });
     selectScenario('kitchen-sink');
     const configs = await Config.getAll(process.cwd());
     await updateDecisions(configs);
@@ -223,6 +231,10 @@ describe('config.reason', () => {
     ]);
 
     const configs = await Config.getAll(process.cwd());
+
+    // Set a base build for cache test (so file matching logic works properly)
+    configs.forEach(config => config.setBaseBuild(BASE_BUILD));
+
     matchConfigs(configs, changedFiles);
     await updateDecisions(configs);
 

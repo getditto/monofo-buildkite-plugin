@@ -211,16 +211,44 @@ export default class Config {
     }
 
     this.allChanges = changedFiles;
-    this.changes = [
-      ...new Set(
-        patterns.flatMap((pattern) =>
-          minimatch.match(changedFiles, pattern, {
+
+    // Track which files have been matched by root-relative patterns to avoid duplicates
+    const matchedByAbsolute = new Set<string>();
+    const matches: string[] = [];
+
+    patterns.forEach((pattern) => {
+      // Handle root-relative paths that start with "/"
+      if (pattern.startsWith('/')) {
+        // Remove leading slash and filter files that match exactly at root level
+        const rootPattern = pattern.substring(1);
+        const rootMatches = changedFiles.filter((file) => {
+          // Check if file matches the pattern without leading slash
+          // and ensure it's not nested in a subdirectory
+          if (minimatch(file, rootPattern, { matchBase: false, dot: true })) {
+            // For exact matches, ensure the file is at root level (no directory separators before the match)
+            return file === rootPattern;
+          }
+          return false;
+        });
+
+        rootMatches.forEach((file) => {
+          matchedByAbsolute.add(file);
+          matches.push(file);
+        });
+      } else {
+        // Use original logic for relative patterns, but exclude files already matched by absolute patterns
+        const relativeMatches = minimatch
+          .match(changedFiles, pattern, {
             matchBase: true,
             dot: true,
           })
-        )
-      ),
-    ];
+          .filter((file) => !matchedByAbsolute.has(file));
+
+        matches.push(...relativeMatches);
+      }
+    });
+
+    this.changes = [...new Set(matches)];
   }
 
   private static async readYaml(file: ConfigFile): Promise<Partial<Config>> {
